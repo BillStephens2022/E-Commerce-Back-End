@@ -32,7 +32,7 @@ ProductTag.init(
       },
       references: {
         model: 'tag',
-        key: 'id'
+        key: 'id',
       },
     },
   },
