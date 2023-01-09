@@ -13,18 +13,26 @@ ProductTag.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    productId: {
+    product_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         isInt: true,
       },
+      references: {
+        model: 'product',
+        key: 'id',
+      },
     },
-    tagId: {
+    tag_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         isInt: true,
+      },
+      references: {
+        model: 'tag',
+        key: 'id'
       },
     },
   },
