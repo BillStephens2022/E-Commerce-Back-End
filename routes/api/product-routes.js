@@ -7,28 +7,48 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
-  const productData = await Product.findAll({
-    attributes: ['id', 'product_name', 'price', 'stock'],
-    include: [
-      {
-        model: Category,
-        attributes: ['category_name'],
-      }, 
-      {
-        model: Tag,
-        attributes: ['tag_name'],
-      },
-    ] 
-  });
-  return res.json(productData);
+  try {
+    const productData = await Product.findAll({
+      attributes: ['id', 'product_name', 'price', 'stock'],
+      include: [
+        {
+          model: Category,
+          attributes: ['category_name'],
+        }, 
+        {
+          model: Tag,
+          attributes: ['tag_name'],
+        },
+      ],
+    });
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // get one product
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
-  const productData = await Product.findByPk(req.params.id);
-  return res.json(productData);
+  try {
+    const productData = await Product.findByPk(req.params.id, {
+      attributes: ['id', 'product_name', 'price', 'stock'],
+      include: [
+        {
+          model: Category,
+          attributes: ['category_name'],
+        }, 
+        {
+          model: Tag,
+          attributes: ['tag_name'],
+        },
+      ],
+    });
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // create new product
